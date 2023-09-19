@@ -1,0 +1,10 @@
+/**
+ * 
+ */
+/**
+ * 
+ */
+module TpIntraconsulta {
+	requires junit;
+	
+}
