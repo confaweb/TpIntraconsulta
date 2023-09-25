@@ -1,15 +1,19 @@
+
 package ar.edu.unlam.dominioIntraconsulta;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Comision {
 
 	private Turno turno;
 	private Ciclo cicloLectivo;
-	private Docente docente;
+	private List<Docente> docentes = new ArrayList<Docente>();
 	private Materia materia;
 
-	public Comision(Ciclo cicloLectivo, Docente docente, Turno turno, Materia materia) {
+	public Comision(Ciclo cicloLectivo,Turno turno, Materia materia) {
 		this.cicloLectivo=cicloLectivo;
-		this.docente=docente;
 		this.materia=materia;
 	}
 
@@ -29,12 +33,12 @@ public class Comision {
 		this.cicloLectivo = cicloLectivo;
 	}
 
-	public Docente getDocente() {
-		return docente;
+	public List<Docente> getDocente() {
+		return docentes;
 	}
 
-	public void setDocente(Docente docente) {
-		this.docente = docente;
+	public void agregarDocente(Docente docente) {
+		this.docentes.add(docente);
 	}
 
 	public Materia getMateria() {
@@ -44,5 +48,19 @@ public class Comision {
 	public void setMateria(Materia materia) {
 		this.materia = materia;
 	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(materia,cicloLectivo);
+	}
+	@Override
+	public boolean equals(Object obj) {
+        if (this == obj) return true; 
+        if (obj == null || getClass() != obj.getClass()) return false; 
+        Comision miClase = (Comision) obj; 
+        return materia == miClase.materia && Objects.equals(cicloLectivo, miClase.cicloLectivo);
+		
+	}
 
 }
+

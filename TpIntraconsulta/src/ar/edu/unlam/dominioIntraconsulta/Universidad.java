@@ -5,21 +5,20 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
 public class Universidad {
 
 	private String nombreInstitucion;
-	private ArrayList<Alumno> registroAlumnos;
-	private ArrayList<Materia> listadoDeMaterias;
-	private ArrayList<Ciclo> listaCicloLectivo;
+	private ArrayList<Alumno> registroAlumnos = new ArrayList<Alumno>();
+	private ArrayList<Materia> listadoDeMaterias = new ArrayList<Materia>();
+	private ArrayList<Ciclo> listaCicloLectivo = new ArrayList<Ciclo>();
+	private ArrayList<Comision> comisiones = new ArrayList<Comision>();
 
 	public Universidad(String nombreInstitucion) {
 		this.nombreInstitucion = nombreInstitucion;
-		this.registroAlumnos = new ArrayList<Alumno>();
-		this.listadoDeMaterias = new ArrayList<Materia>();
-		this.listaCicloLectivo = new ArrayList<Ciclo>();
 	}
 
 	public String getNombreInstitucion() {
@@ -57,9 +56,6 @@ public class Universidad {
 			return listadoDeMaterias.add(materia);
 		else
 			return false;
-
-		// TODO Auto-generated method stub
-
 	}
 
 	private boolean chequearMateriaExistente(Materia materia) {
@@ -82,6 +78,15 @@ public class Universidad {
 		}
 		return false;
 	}
+	
+	public boolean agregarComision(Comision comision) {
+		
+		if(checkComisionDuplicada(comision) == false) {
+			this.comisiones.add(comision);
+			return true;
+		}else return false;
+		
+	}
 
 	private boolean chequearCicloPorId(Integer id) {
 		for (Ciclo ciclo : listaCicloLectivo) {
@@ -90,6 +95,12 @@ public class Universidad {
 
 		}
 		return false;
+	}
+	
+	public boolean checkComisionDuplicada(Comision comision) {
+		if (comisiones.contains(comision)) {
+			return true;
+		}else return false;
 	}
 
 

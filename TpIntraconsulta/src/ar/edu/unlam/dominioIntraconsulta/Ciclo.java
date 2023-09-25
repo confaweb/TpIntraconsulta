@@ -1,12 +1,15 @@
 package ar.edu.unlam.dominioIntraconsulta;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ciclo {
 
 	private Integer id;
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
+	private List<LocalDate> inscripciones = new ArrayList<LocalDate>();
 
 	public Ciclo(Integer id, LocalDate fechaInicio, LocalDate fechaFin) {
 		this.id = id;
