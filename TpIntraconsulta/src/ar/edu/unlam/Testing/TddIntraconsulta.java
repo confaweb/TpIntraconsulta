@@ -257,11 +257,14 @@ public class TddIntraconsulta {
 		Ciclo cicloLectivo = new Ciclo(id, fechaInicio, fechaFin);
 
 		Comision comision = new Comision(cicloLectivo, docente, turno, materia);
+		
 
 		Universidad uba = new Universidad(nombreInstitucion);
 		
+		uba.agregarComision(comision);
+		
 
-		Docente vo = uba.asignarDocenteAComision(comision,docente);
+		Docente vo = uba.asignarDocenteAComision(comision,docente2);
 		Docente ve = docente;
 
 //		Validacion-Salida

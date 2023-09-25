@@ -160,13 +160,15 @@ public class Universidad {
 	}
 
 	public Docente asignarDocenteAComision(Comision comision, Docente docente) {
+		Docente docenteAgregado=null;
 		for (Comision comisiones : listaComisiones) {
-			if (comisiones.getDocente() == null && !comisiones.getDocente().getDni().equals(docente.getDni())) {
+			if ( !comisiones.getDocente().getDni().equals(docente.getDni())) {
 				comision.setDocente(docente);
-				return docente;
+				docenteAgregado= docente;
 			}
 		}
-		return null;
+		
+		return docenteAgregado;
 	}
 
 }
