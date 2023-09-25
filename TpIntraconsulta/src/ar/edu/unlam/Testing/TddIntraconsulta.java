@@ -188,10 +188,6 @@ public class TddIntraconsulta {
 		uba.agregarComision(comision);
 		assertFalse(uba.agregarComision(comision));
 		
-		
-		// Ejeccucion-Salida
-		
-		
 	}
 
 }

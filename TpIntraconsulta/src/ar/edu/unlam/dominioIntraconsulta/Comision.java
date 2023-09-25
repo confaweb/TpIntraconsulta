@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Comision {
 
-	private Turno turno;
+	public Turno turno;
 	private Ciclo cicloLectivo;
 	private List<Docente> docentes = new ArrayList<Docente>();
 	private Materia materia;
@@ -15,6 +15,7 @@ public class Comision {
 	public Comision(Ciclo cicloLectivo,Turno turno, Materia materia) {
 		this.cicloLectivo=cicloLectivo;
 		this.materia=materia;
+		this.turno = turno;
 	}
 
 	public Turno getTurno() {
