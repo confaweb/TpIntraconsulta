@@ -170,42 +170,103 @@ public class TddIntraconsulta {
 		LocalDate fechaFin2 = LocalDate.of(2022, 12, 01);
 		Integer id = 11111;
 		Integer id2 = 22222;
-		
+
 		String nombre = "Desarrollo 1";
 		String nombre2 = "Desarrolo 2";
 		Integer idMateria = 0001;
-		Integer idMateria2 = 0001;
-		
-		Integer dni=12345;
-		Integer dni2=54321;
-		String nombreDocente="Juan";
-		String nombreDocente2="Pedro";
-		
-		Turno turno=Turno.MANIANA;
-		Turno turno2=Turno.TARDE;
+		Integer idMateria2 = 0002;
+
+		Integer dni = 12345;
+		Integer dni2 = 54321;
+		String nombreDocente = "Juan";
+		String nombreDocente2 = "Pedro";
+
+		Turno turno = Turno.TARDE;
+		Turno turno2 = Turno.TARDE;
 
 		// Proceso
 		Ciclo cicloLectivo = new Ciclo(id, fechaInicio, fechaFin);
 		Ciclo cicloLectivo2 = new Ciclo(id2, fechaInicio2, fechaFin2);
 
 		Docente docente = new Docente(dni, nombreDocente);
-		Docente docente2 = new Docente(dni2, nombreDocente2);		
-	
+		Docente docente2 = new Docente(dni2, nombreDocente2);
+
 		Materia materia = new Materia(nombre, idMateria);
 		Materia materia2 = new Materia(nombre2, idMateria2);
-		
+
 		Comision comision = new Comision(cicloLectivo, docente, turno, materia);
 		Comision comision2 = new Comision(cicloLectivo2, docente2, turno2, materia2);
-		
 
 		Universidad uba = new Universidad(nombreInstitucion);
 
-		Boolean vo = uba.agregarCicloLectivo(cicloLectivo);
-		Boolean vo2 = uba.agregarCicloLectivo(cicloLectivo2);
+		Boolean vo = uba.agregarComision(comision);
+		Boolean vo2 = uba.agregarComision(comision2);
 
 		// Ejeccucion-Salida
 		assertTrue(vo);
 		assertFalse(vo2);
+	}
+
+	@Test
+	public void queNoSePuedaAgregarDosDocentesconElMismoDni() {
+//		Preparacion-Entrada
+		String nombreInstitucion = "UniversidadBuenosAires";
+
+		Integer dni = 12345;
+		Integer dni2 = 12345;
+		String nombreDocente = "Juan";
+		String nombreDocente2 = "Pedro";
+
+//		Proceso
+		Docente docente = new Docente(dni, nombreDocente);
+		Docente docente2 = new Docente(dni2, nombreDocente2);
+
+		Universidad uba = new Universidad(nombreInstitucion);
+
+		Boolean vo = uba.agregarDocente(docente);
+		Boolean vo2 = uba.agregarDocente(docente2);
+
+//		Validacion-Salida
+		assertTrue(vo);
+		assertFalse(vo2);
+	}
+
+	@Test
+	public void queSePuedaAsignarDocenteAUnaComision() {//REVISAR ,CORREGIR YBORRARCOMENTARIO
+//		Preparacion-Entrada
+		String nombreInstitucion = "UniversidadBuenosAires";
+
+		Integer dni = 12345;
+		Integer dni2 = 12345;
+		String nombreDocente = "Juan";
+		String nombreDocente2 = "Pedro";
+
+		String nombre = "Desarrollo 1";
+		Integer idMateria = 0001;
+
+		LocalDate fechaInicio = LocalDate.of(2022, 03, 01);
+		LocalDate fechaFin = LocalDate.of(2022, 07, 01);
+		Integer id = 11111;
+
+		Turno turno = Turno.TARDE;
+//		Proceso
+		Docente docente = new Docente(dni, nombreDocente);
+		Docente docente2 = new Docente(dni2, nombreDocente2);
+
+		Materia materia = new Materia(nombre, idMateria);
+		Ciclo cicloLectivo = new Ciclo(id, fechaInicio, fechaFin);
+
+		Comision comision = new Comision(cicloLectivo, docente, turno, materia);
+
+		Universidad uba = new Universidad(nombreInstitucion);
+		
+
+		Docente vo = uba.asignarDocenteAComision(comision,docente);
+		Docente ve = docente;
+
+//		Validacion-Salida
+		assertEquals(ve,vo);
+		
 	}
 
 }

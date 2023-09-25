@@ -2,7 +2,7 @@ package ar.edu.unlam.dominioIntraconsulta;
 
 public class Comision {
 
-	private Turno turno;
+	public Turno turno;
 	private Ciclo cicloLectivo;
 	private Docente docente;
 	private Materia materia;
@@ -11,6 +11,7 @@ public class Comision {
 		this.cicloLectivo=cicloLectivo;
 		this.docente=docente;
 		this.materia=materia;
+		this.turno = turno;
 	}
 
 	public Turno getTurno() {
