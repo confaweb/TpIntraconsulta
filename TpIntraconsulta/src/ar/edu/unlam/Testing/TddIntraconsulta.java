@@ -4,14 +4,17 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import ar.edu.unlam.dominioIntraconsulta.Alumno;
 
-import ar.edu.unlam.dominioIntraconsulta.Ciclo;
+import ar.edu.unlam.dominioIntraconsulta.CicloLectivo;
 import ar.edu.unlam.dominioIntraconsulta.Comision;
 import ar.edu.unlam.dominioIntraconsulta.Docente;
 import ar.edu.unlam.dominioIntraconsulta.Materia;
+import ar.edu.unlam.dominioIntraconsulta.PeriodoDeInscripcion;
 import ar.edu.unlam.dominioIntraconsulta.Turno;
 import ar.edu.unlam.dominioIntraconsulta.Universidad;
 
@@ -19,9 +22,9 @@ public class TddIntraconsulta {
 
 	@Test
 	public void queSePuedaInscribirUnAlumnoALaUniverdidad() {
-		String nombreInstitucion = "UniversidadBuenosAires";
+
 		// Entrada
-		Universidad uba = new Universidad(nombreInstitucion);
+		String nombreInstitucion = "UniversidadBuenosAires";
 		String nombre = "Pedro";
 		String apellido = "Perez";
 		Integer dni = 1111;
@@ -30,9 +33,10 @@ public class TddIntraconsulta {
 		Integer dia = 29;
 		LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
 		LocalDate fechaIngreso = LocalDate.of(2020, Month.MARCH, 01);
-		Alumno alumno1 = new Alumno(nombre, apellido, dni, fechaNacimiento, fechaIngreso);
-		// Proceso
 
+		// Proceso
+		Universidad uba = new Universidad(nombreInstitucion);
+		Alumno alumno1 = new Alumno(nombre, apellido, dni, fechaNacimiento, fechaIngreso);
 		Boolean vo = uba.ingresarAlumno(alumno1, dni);
 		// Salida-
 		assertTrue(vo);
@@ -72,7 +76,6 @@ public class TddIntraconsulta {
 		Month mes = Month.APRIL;
 		Integer dia = 29;
 		LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
-
 		LocalDate fechaIngreso = LocalDate.of(2020, Month.MARCH, 01);
 		Alumno alumno1 = new Alumno(nombre, apellido, dni, fechaNacimiento, fechaIngreso);
 		Alumno alumno2 = new Alumno(nombre, apellido, dni2, fechaNacimiento, fechaIngreso);
@@ -120,8 +123,8 @@ public class TddIntraconsulta {
 		Integer id2 = 11111;
 
 		// Proceso
-		Ciclo cicloLectivo = new Ciclo(id, fechaInicio, fechaFin);
-		Ciclo cicloLectivo2 = new Ciclo(id2, fechaInicio2, fechaFin2);
+		CicloLectivo cicloLectivo = new CicloLectivo(id, fechaInicio, fechaFin);
+		CicloLectivo cicloLectivo2 = new CicloLectivo(id2, fechaInicio2, fechaFin2);
 
 		Universidad uba = new Universidad(nombreInstitucion);
 		Boolean vo = uba.agregarCicloLectivo(cicloLectivo);
@@ -145,8 +148,8 @@ public class TddIntraconsulta {
 		Integer id2 = 22222;
 
 		// Proceso
-		Ciclo cicloLectivo = new Ciclo(id, fechaInicio, fechaFin);
-		Ciclo cicloLectivo2 = new Ciclo(id2, fechaInicio2, fechaFin2);
+		CicloLectivo cicloLectivo = new CicloLectivo(id, fechaInicio, fechaFin);
+		CicloLectivo cicloLectivo2 = new CicloLectivo(id2, fechaInicio2, fechaFin2);
 
 		Universidad uba = new Universidad(nombreInstitucion);
 
@@ -164,6 +167,7 @@ public class TddIntraconsulta {
 																						// equals-->.)LocalDate.isBefore/isAfter
 		// Preparacion-Entrada
 		String nombreInstitucion = "UniversidadBuenosAires";
+
 		LocalDate fechaInicio = LocalDate.of(2022, 03, 01);
 		LocalDate fechaFin = LocalDate.of(2022, 07, 01);
 		LocalDate fechaInicio2 = LocalDate.of(2022, 07, 03);
@@ -185,8 +189,8 @@ public class TddIntraconsulta {
 		Turno turno2 = Turno.TARDE;
 
 		// Proceso
-		Ciclo cicloLectivo = new Ciclo(id, fechaInicio, fechaFin);
-		Ciclo cicloLectivo2 = new Ciclo(id2, fechaInicio2, fechaFin2);
+		CicloLectivo cicloLectivo = new CicloLectivo(id, fechaInicio, fechaFin);
+		CicloLectivo cicloLectivo2 = new CicloLectivo(id2, fechaInicio2, fechaFin2);
 
 		Docente docente = new Docente(dni, nombreDocente);
 		Docente docente2 = new Docente(dni2, nombreDocente2);
@@ -194,8 +198,9 @@ public class TddIntraconsulta {
 		Materia materia = new Materia(nombre, idMateria);
 		Materia materia2 = new Materia(nombre2, idMateria2);
 
-		Comision comision = new Comision(cicloLectivo, docente, turno, materia);
-		Comision comision2 = new Comision(cicloLectivo2, docente2, turno2, materia2);
+		ArrayList<Alumno> listadoAlumnosDeLaComision = new ArrayList<Alumno>();
+		Comision comision = new Comision(cicloLectivo, docente, turno, materia, listadoAlumnosDeLaComision);
+		Comision comision2 = new Comision(cicloLectivo2, docente2, turno2, materia2, listadoAlumnosDeLaComision);
 
 		Universidad uba = new Universidad(nombreInstitucion);
 
@@ -232,12 +237,12 @@ public class TddIntraconsulta {
 	}
 
 	@Test
-	public void queSePuedaAsignarDocenteAUnaComision() {//REVISAR ,CORREGIR YBORRARCOMENTARIO
+	public void queSePuedaAsignarDocenteAUnaComision() {// REVISAR ,CORREGIR YBORRARCOMENTARIO
 //		Preparacion-Entrada
 		String nombreInstitucion = "UniversidadBuenosAires";
 
 		Integer dni = 12345;
-		Integer dni2 = 12345;
+		Integer dni2 = 54321;
 		String nombreDocente = "Juan";
 		String nombreDocente2 = "Pedro";
 
@@ -254,22 +259,99 @@ public class TddIntraconsulta {
 		Docente docente2 = new Docente(dni2, nombreDocente2);
 
 		Materia materia = new Materia(nombre, idMateria);
-		Ciclo cicloLectivo = new Ciclo(id, fechaInicio, fechaFin);
+		CicloLectivo cicloLectivo = new CicloLectivo(id, fechaInicio, fechaFin);
 
-		Comision comision = new Comision(cicloLectivo, docente, turno, materia);
-		
+		ArrayList<Alumno> listadoAlumnosDeLaComision = new ArrayList<Alumno>();
+		Comision comision = new Comision(cicloLectivo, docente, turno, materia, listadoAlumnosDeLaComision);
 
 		Universidad uba = new Universidad(nombreInstitucion);
-		
-		uba.agregarComision(comision);
-		
 
-		Docente vo = uba.asignarDocenteAComision(comision,docente2);
-		Docente ve = docente;
+		uba.agregarComision(comision);
+
+		Docente vo = uba.asignarDocenteAComision(comision, docente2);
+		Docente ve = docente2;
 
 //		Validacion-Salida
-		assertEquals(ve,vo);
-		
+		assertEquals(ve, vo);
+
 	}
 
+	/*
+	 * agregarCorrelatividad(idMateria, idCorrelativa)
+	 * 
+	 */
+	@Test
+	public void QueSePuedaAgregarCorrelatividad() {//// Se debe validar que ambos códigos existan en una materia
+		// Preparacion-Entrada
+		String nombreInstitucion = "UniversidadBuenosAires";
+
+		String nombre = "Desarrollo 1";
+		String nombre2 = "Desarrolo 2";
+		Integer idMateria = 0001;
+		Integer idCorrelativa = 0002;
+		Integer idMateria2 = 0002;
+		Integer idCorrelativa2 = null;
+
+		// Proceso
+		Universidad uba = new Universidad(nombreInstitucion);
+
+		Materia materia = new Materia(nombre, idMateria, idCorrelativa);
+		uba.agregarMateria(materia);
+		Materia materia2 = new Materia(nombre2, idMateria2);
+		uba.agregarMateria(materia2);
+
+		Boolean vo = uba.agregarCorrelatividad(idMateria, idCorrelativa);
+		Boolean vo2 = uba.agregarCorrelatividad(idMateria2, idCorrelativa2);
+
+		// Ejeccucion-Salida
+		assertTrue(vo);
+		assertFalse(vo2);
+	}
+
+	@Test
+	public void QueLaUniversidadAsigneAlumnosAUnaComisionSoloDuranteFechaDeInscripcion() {
+		// Preparacion- Entrada
+		// UNIVERSIDAD-ALUMNO--COMISION-PERIODO DE INSCRIPCION
+		String nombreInstitucion = "UniversidadBuenosAires";
+		String nombre = "Pedro";
+		String apellido = "Perez";
+		Integer dni = 1111;
+		Integer anio = 1995;
+		Month mes = Month.APRIL;
+		Integer dia = 29;
+		LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
+		LocalDate fechaIngreso = LocalDate.of(2020, Month.MARCH, 01);
+
+		LocalDate fechaInicio = LocalDate.of(2022, 03, 01);
+		LocalDate fechaFin = LocalDate.of(2022, 07, 01);
+		Integer id = 11111;
+
+		String nombreMat = "Desarrollo 1";
+		Integer idMateria = 0001;
+
+		Integer dniDocente = 12345;
+		String nombreDocente = "Juan";
+
+		Turno turno = Turno.TARDE;
+
+		Integer idCicloLectivo = 2024_1;
+		LocalDate fechaInicioInscr = LocalDate.of(2024, 03, 03);
+		LocalDate FechaFinInscr = LocalDate.of(2024, 03, 9);
+		// Proceso
+		PeriodoDeInscripcion fechaInncripicon = new PeriodoDeInscripcion(idCicloLectivo, fechaInicioInscr,
+				FechaFinInscr);
+		CicloLectivo cicloLectivo = new CicloLectivo(id, fechaInicio, fechaFin);
+		Docente docente = new Docente(dniDocente, nombreDocente);
+		Materia materia = new Materia(nombreMat, idMateria);
+		ArrayList<Alumno> listadoAlumnosDeLaComision = new ArrayList<Alumno>();
+		Comision comision = new Comision(cicloLectivo, docente, turno, materia, listadoAlumnosDeLaComision);
+		Universidad uba = new Universidad(nombreInstitucion);
+		Alumno alumno1 = new Alumno(nombre, apellido, dni, fechaNacimiento, fechaIngreso);
+
+		Boolean ve = uba.asignarAlumnoEnComison(alumno1, comision);
+
+		// Ejecucion-Salida
+
+		assertTrue(ve);
+	}
 }

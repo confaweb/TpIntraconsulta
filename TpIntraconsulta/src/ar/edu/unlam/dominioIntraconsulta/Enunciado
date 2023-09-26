@@ -41,10 +41,10 @@ agregarComision
 //No se Pueden generar 2 Comisiones para la misma materia, el mismo cicloLectivo y el mismo turno-->
 
 agregarDocentes
-//No se puede agregar 2 docentes con el mismo dni
+//No se puede agregar 2 docentes con el mismo dni-->
 
 asignarDocentesAComision
-//El mismo docente no puede ser profesor de la misma comisión 2 veces.
+//El mismo docente no puede ser profesor de la misma comisión 2 veces.///Revisar
 
 agregarCorrelatividad(idMateria,  idCorrelativa)
 //Se debe validar que ambos códigos existan en una materia
@@ -63,7 +63,6 @@ inscribirAlumnoAComision (dni, idComision)
 asignarProfesorAlaComision(idComision, dniDocente)
 // verificar que exista la comisión y el docente
 //Cada 20 alumnos se debe agregar un docente ejemplo de 1 a 20 alumnos solo se puede asignar un docente, de 21 a 40 2 docentes
-
 asignarAulaAlaComision(idComision, dniDocente)
 // verificar que exista la comisión y el docente
 //Cada 20 alumnos se debe agregar un docente ejemplo de 1 a 20 alumnos solo se puede asignar un docente, de 21 a 40 2 docentes

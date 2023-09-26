@@ -6,10 +6,16 @@ public class Materia {
 
 	private String nombre;
 	private Integer id;
+	private Integer idCorrelativa;
 
 	public Materia(String nombre, Integer id) {
 		this.nombre=nombre;
 		this.id=id;
+	}
+	public Materia(String nombre, Integer id,Integer idCorrelativa) {
+		this.nombre=nombre;
+		this.id=id;
+		this.idCorrelativa=idCorrelativa;
 	}
 
 	public String getNombre() {
@@ -28,6 +34,12 @@ public class Materia {
 		this.id = id;
 	}
 
+	public Integer getIdCorrelativa() {
+		return idCorrelativa;
+	}
+	public void setIdCorrelativa(Integer idCorrelativa) {
+		this.idCorrelativa = idCorrelativa;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

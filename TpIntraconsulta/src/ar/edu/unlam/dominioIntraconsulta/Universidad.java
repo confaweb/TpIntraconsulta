@@ -8,17 +8,19 @@ public class Universidad {
 	private String nombreInstitucion;
 	private ArrayList<Alumno> registroAlumnos;
 	private ArrayList<Materia> listadoDeMaterias;
-	private ArrayList<Ciclo> listaCicloLectivo;
+	private ArrayList<CicloLectivo> listaCicloLectivo;
 	private ArrayList<Comision> listaComisiones;
 	private ArrayList<Docente> listaDocentes;
+	private ArrayList<Materia> listaCorrelativas;
 
 	public Universidad(String nombreInstitucion) {
 		this.nombreInstitucion = nombreInstitucion;
 		this.registroAlumnos = new ArrayList<Alumno>();
 		this.listadoDeMaterias = new ArrayList<Materia>();
-		this.listaCicloLectivo = new ArrayList<Ciclo>();
+		this.listaCicloLectivo = new ArrayList<CicloLectivo>();
 		this.listaComisiones = new ArrayList<Comision>();
 		this.listaDocentes = new ArrayList<Docente>();
+		this.listaCorrelativas = new ArrayList<Materia>();
 	}
 	// Getters &Setters
 
@@ -56,7 +58,7 @@ public class Universidad {
 		listadoDeMaterias.clear();
 	}
 
-	public void eliminarCicloLectivo(Ciclo cicloLectivo) {
+	public void eliminarCicloLectivo(CicloLectivo cicloLectivo) {
 		listaCicloLectivo.clear();
 	}
 
@@ -83,7 +85,7 @@ public class Universidad {
 
 	}
 
-	public Boolean agregarCicloLectivo(Ciclo cicloLectivo) {
+	public Boolean agregarCicloLectivo(CicloLectivo cicloLectivo) {
 		if (!chequearCicloPorId(cicloLectivo.getId()) && !chequearSuperposicion(cicloLectivo.getFechaInicio()))
 			return listaCicloLectivo.add(cicloLectivo);
 		else
@@ -131,8 +133,8 @@ public class Universidad {
 	}
 
 	private boolean chequearSuperposicion(LocalDate fechaInicio) {
-		for (Ciclo ciclo : listaCicloLectivo) {
-			if (ciclo.getFechaFin().isAfter(fechaInicio) || ciclo.getFechaFin().equals(fechaInicio))
+		for (CicloLectivo cicloLectivo : listaCicloLectivo) {
+			if (cicloLectivo.getFechaFin().isAfter(fechaInicio) || cicloLectivo.getFechaFin().equals(fechaInicio))
 				return true;
 
 		}
@@ -140,8 +142,8 @@ public class Universidad {
 	}
 
 	private boolean chequearCicloPorId(Integer id) {
-		for (Ciclo ciclo : listaCicloLectivo) {
-			if (ciclo.getId().equals(id))
+		for (CicloLectivo cicloLectivo : listaCicloLectivo) {
+			if (cicloLectivo.getId().equals(id))
 				return true;
 
 		}
@@ -159,16 +161,28 @@ public class Universidad {
 		return false;
 	}
 
+	// El mismo docente no puede ser profesor de la misma comisión 2 veces.
 	public Docente asignarDocenteAComision(Comision comision, Docente docente) {
-		Docente docenteAgregado=null;
-		for (Comision comisiones : listaComisiones) {
-			if ( !comisiones.getDocente().getDni().equals(docente.getDni())) {
-				comision.setDocente(docente);
-				docenteAgregado= docente;
-			}
+
+		if (!comision.getDocente().getDni().equals(docente.getDni()))
+
+			comision.setDocente(docente);
+		return comision.getDocente();
+
+	}
+
+	public Boolean agregarCorrelatividad(Integer idMateria, Integer idCorrelativa) {
+		for (Materia materia : listadoDeMaterias) {
+			if (materia.getId().equals(idMateria) && materia.getIdCorrelativa() != null
+					&& materia.getIdCorrelativa().equals(idCorrelativa))
+				return listaCorrelativas.add(materia);
 		}
-		
-		return docenteAgregado;
+		return false;
+	}
+
+	public Boolean asignarAlumnoEnComison(Alumno alumno1,Comision comision) {
+		// TODO Auto-generated method stub
+		return comision.agregarAlumno(alumno1);
 	}
 
 }
