@@ -48,6 +48,10 @@ public class Alumno {
 		}return found;
 	}
 
+	public Alumno() {
+		
+	}
+
 	public String getApellido() {
 		return apellido;
 	}

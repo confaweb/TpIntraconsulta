@@ -235,7 +235,6 @@ public class Universidad {
 	public Docente asignarDocenteAComision(Comision comision, Docente docente) {
 
 		if (!comision.getDocente().getDni().equals(docente.getDni()))
-
 			comision.setDocente(docente);
 		return comision.getDocente();
 
@@ -250,9 +249,72 @@ public class Universidad {
 		return false;
 	}
 
-	public Boolean asignarAlumnoEnComison(Alumno alumno1,Comision comision) {
+	public Boolean asignarAlumnoEnComision(Alumno alumno1, Comision comision) {
 		// TODO Auto-generated method stub
 		return comision.agregarAlumno(alumno1);
+	}
+
+	public Boolean asignarAulaEnComision(Integer idComision, Integer dniDocente) {
+		Boolean aulaAsignada = false;
+		if (existeComision(idComision) && existeDocente(dniDocente))
+			aulaAsignada = true;
+		return aulaAsignada;
+	}
+
+	private boolean existeComision(Integer idComision) {
+		for (Comision comisiones : listaComisiones) {
+			if (comisiones.getIdComision().equals(idComision))
+				return true;
+		}
+		return false;
+
+	}
+
+	private boolean existeDocente(Integer dniDocente) {
+		for (Docente docentes : listaDocentes) {
+			if (docentes.getDni().equals(dniDocente))
+				return true;
+		}
+		return false;
+
+	}
+
+	private Integer cantidadDeDocentesPorComision(Comision comision) {
+		Integer cantidadDocentes = 0;
+		if (comision.getListaAlumnosComision().size() < 20)
+			cantidadDocentes++;
+		else if (comision.getListaAlumnosComision().size() > 20 && comision.getListaAlumnosComision().size() < 40) {
+			cantidadDocentes++;
+			cantidadDocentes++;
+		}
+
+		else {
+			cantidadDocentes++;
+			cantidadDocentes++;
+			cantidadDocentes++;
+		}
+
+		return cantidadDocentes;
+	}
+
+	public Integer asignarDocentesAComision(Comision comision, Docente docente1, Docente docente2, Docente docente3) {
+		if (cantidadDeDocentesPorComision(comision) == 1)
+			comision.agregarDocente(docente1);
+		
+		else if (cantidadDeDocentesPorComision(comision) == 2) {
+			comision.getCantidadDocentes().clear();
+			comision.agregarDocente(docente1);
+			comision.agregarDocente(docente2);
+		}
+
+		else if (cantidadDeDocentesPorComision(comision) == 3) {
+			comision.getCantidadDocentes().clear();
+			comision.agregarDocente(docente1);
+			comision.agregarDocente(docente2);
+			comision.agregarDocente(docente3);
+		}
+		return comision.getCantidadDocentes().size();
+
 	}
 
 }
