@@ -72,6 +72,14 @@ public class Comision {
 		this.materia = materia;
 	}
 
+	public ArrayList<Docente> getCantidadDocentes() {
+		return cantidadDocentes;
+	}
+
+	public void setCantidadDocentes(ArrayList<Docente> cantidadDocentes) {
+		this.cantidadDocentes = cantidadDocentes;
+	}
+
 	public Boolean agregarAlumno(Alumno alumno) {
 		return this.listaAlumnosComision.add(alumno);
 	}
@@ -83,6 +91,12 @@ public class Comision {
 	public void agregarDocente(Docente docente) {
 
 		this.cantidadDocentes.add(docente);
+	}
+	public void simularCantidadDeAlumnos(Integer cantidadDeseada) {
+		Alumno alumno = new Alumno();
+		for (int i = 0; i < cantidadDeseada; i++) {
+			this.listaAlumnosComision.add(alumno);
+		}
 	}
 
 	@Override

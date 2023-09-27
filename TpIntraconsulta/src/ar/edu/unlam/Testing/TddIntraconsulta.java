@@ -404,15 +404,95 @@ public class TddIntraconsulta {
 		Universidad uba = new Universidad(nombreInstitucion);
 		Alumno alumno1 = new Alumno(nombre, apellido, dni, fechaNacimiento, fechaIngreso);
 		
-		uba.agregarDocente(docente);
+		uba.agregarDocente(docente);// solo se agregó el elemento "docente" en la lista.
 		uba.agregarComision(comision);
 
 		Boolean ve = uba.asignarAulaEnComision(idComision, dniDocente);
-		Boolean ve1 = uba.asignarAulaEnComision(idComision, dniDocente2);
+		Boolean ve1 = uba.asignarAulaEnComision(idComision, dniDocente2);// al no existir elelemento "docente2" en la lista NO SE ASIGNA AULA PARA LA COMISION.
 
 		// Ejecucion-Salida
 
 		assertTrue(ve);
 		assertFalse(ve1);
+	}
+	@Test
+	public void QueSeAsignerUnDocenteCada20Alumnos() {
+		// Preparacion- Entrada
+		
+		String nombreInstitucion = "UniversidadBuenosAires";
+		String nombre = "Pedro";
+		String apellido = "Perez";
+		Integer dni = 1111;
+		Integer anio = 1995;
+		Month mes = Month.APRIL;
+		Integer dia = 29;
+		LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
+		LocalDate fechaIngreso = LocalDate.of(2020, Month.MARCH, 01);
+
+		LocalDate fechaInicio = LocalDate.of(2022, 03, 01);
+		LocalDate fechaFin = LocalDate.of(2022, 07, 01);
+		Integer id = 11111;
+
+		String nombreMat = "Desarrollo 1";
+		Integer idMateria = 0001;
+
+		Integer dniDocente = 12345;
+		Integer dniDocente2=54321;
+		Integer dniDocente3=45678;
+		String nombreDocente = "Juan";
+		String nombreDocente2 = "Pedro";
+		String nombreDocente3 = "Manuel";
+
+		Turno turno = Turno.TARDE;
+		Integer idComision = 1111;
+
+		Integer idCicloLectivo = 2024_1;
+		LocalDate fechaInicioInscr = LocalDate.of(2024, 03, 03);
+		LocalDate FechaFinInscr = LocalDate.of(2024, 03, 9);
+		// Proceso
+		PeriodoDeInscripcion fechaInncripicon = new PeriodoDeInscripcion(idCicloLectivo, fechaInicioInscr,FechaFinInscr);
+		CicloLectivo cicloLectivo = new CicloLectivo(id, fechaInicio, fechaFin);
+		Docente docente = new Docente(dniDocente, nombreDocente);
+		Docente docente2 = new Docente(dniDocente2, nombreDocente2);
+		Docente docente3 = new Docente(dniDocente3, nombreDocente3);
+		Materia materia = new Materia(nombreMat, idMateria);
+		ArrayList<Alumno> listadoAlumnosDeLaComision = new ArrayList<Alumno>();
+		Comision comision = new Comision(idComision,cicloLectivo, docente, turno, materia, listadoAlumnosDeLaComision);
+		Universidad uba = new Universidad(nombreInstitucion);
+		Alumno alumno1 = new Alumno(nombre, apellido, dni, fechaNacimiento, fechaIngreso);
+		
+		//Caso cantidad de alumnos < 20.
+		comision.simularCantidadDeAlumnos(12);// Simula cantidad de alumnos en una comision
+		uba.asignarDocentesAComision(comision, docente, docente2, docente3);
+		
+		Integer vo_menosDe20Alumnos = comision.getCantidadDocentes().size();
+		Integer ve_menosDe20Alumnos = 1;
+		
+		// Ejecucion-Salida1
+		
+		assertEquals(vo_menosDe20Alumnos,ve_menosDe20Alumnos);
+		
+		
+		//Caso cantidad de alumnos > 20.
+		comision.simularCantidadDeAlumnos(22);// Simula cantidad de alumnos en una comision
+		uba.asignarDocentesAComision(comision, docente, docente2, docente3);
+		Integer vo_masDe20Alumnos = comision.getCantidadDocentes().size();
+		Integer ve_masDe20Alumnos  = 2;
+		
+		// Ejecucion-Salida2
+		
+		assertEquals(vo_masDe20Alumnos,ve_masDe20Alumnos);
+		
+		//Caso cantidad de alumnos > 40.
+		comision.simularCantidadDeAlumnos(42);// Simula cantidad de alumnos en una comision
+		uba.asignarDocentesAComision(comision, docente, docente2, docente3);//Agrega Docente  a la comision por parametro según cantidad de alumnos
+	
+		Integer vo_masDe40Alumnos = comision.getCantidadDocentes().size();
+		Integer ve_masDe40Alumnos = 3;
+		
+		assertEquals(vo_masDe40Alumnos,ve_masDe40Alumnos);
+
+		
+		
 	}
 }

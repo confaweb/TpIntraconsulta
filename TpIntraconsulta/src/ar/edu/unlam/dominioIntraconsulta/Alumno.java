@@ -19,6 +19,10 @@ public class Alumno {
 		this.fechaIingreso=fechaIngreso;
 	}
 
+	public Alumno() {
+		
+	}
+
 	public String getApellido() {
 		return apellido;
 	}

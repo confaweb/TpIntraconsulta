@@ -209,23 +209,42 @@ public class Universidad {
 
 	}
 
-	public Integer cantidadDeDocentesPorComision(Comision comision) {
-		Integer cantidadDocentes = 1;
-		if (comision.getListaAlumnosComision().size() > 20)
+	private Integer cantidadDeDocentesPorComision(Comision comision) {
+		Integer cantidadDocentes = 0;
+		if (comision.getListaAlumnosComision().size() < 20)
 			cantidadDocentes++;
-		else if (comision.getListaAlumnosComision().size() > 40)
+		else if (comision.getListaAlumnosComision().size() > 20 && comision.getListaAlumnosComision().size() < 40) {
 			cantidadDocentes++;
-		else
 			cantidadDocentes++;
+		}
+
+		else {
+			cantidadDocentes++;
+			cantidadDocentes++;
+			cantidadDocentes++;
+		}
+
 		return cantidadDocentes;
 	}
 
-	public void asignarDocentesAComision(Comision comision, Docente docente1, Docente docente2, Docente docente3) {
-		comision.agregarDocente(docente1);
-		if (cantidadDeDocentesPorComision(comision) == 2)
+	public Integer asignarDocentesAComision(Comision comision, Docente docente1, Docente docente2, Docente docente3) {
+		if (cantidadDeDocentesPorComision(comision) == 1)
+			comision.agregarDocente(docente1);
+		
+		else if (cantidadDeDocentesPorComision(comision) == 2) {
+			comision.getCantidadDocentes().clear();
+			comision.agregarDocente(docente1);
 			comision.agregarDocente(docente2);
-		else if (cantidadDeDocentesPorComision(comision) == 3)
+		}
+
+		else if (cantidadDeDocentesPorComision(comision) == 3) {
+			comision.getCantidadDocentes().clear();
+			comision.agregarDocente(docente1);
+			comision.agregarDocente(docente2);
 			comision.agregarDocente(docente3);
+		}
+		return comision.getCantidadDocentes().size();
+
 	}
 
 }
