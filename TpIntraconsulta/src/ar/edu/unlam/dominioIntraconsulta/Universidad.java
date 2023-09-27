@@ -28,6 +28,62 @@ public class Universidad {
 		return nombreInstitucion;
 	}
 
+	public void registrarNota1erParcial(Comision comision, Integer idalumno,Integer nota) {
+		Alumno alumno = comision.getAlumnoByID(idalumno);
+		Integer idmateriacursando = comision.getMateria().getId();
+		Materia materiacursando = alumno.getCursandoByID(idmateriacursando);
+		materiacursando.setParcial1(nota);
+	}
+	
+	public void registrarNota2doParcial(Comision comision, Integer idalumno,Integer nota) {
+		Alumno alumno = comision.getAlumnoByID(idalumno);
+		Integer idmateriacursando = comision.getMateria().getId();
+		Materia materiacursando = alumno.getCursandoByID(idmateriacursando);
+		materiacursando.setParcial2(nota);
+	}
+	
+	public boolean registrarNota(Comision comision,Integer idalumno, Integer nota) {
+		Alumno alumno = comision.getAlumnoByID(idalumno);
+		Integer idmateriacursando = comision.getMateria().getId();
+		Materia materiacursando = alumno.getCursandoByID(idmateriacursando);
+		Integer idcorrelativa = materiacursando.getIdCorrelativa();
+		Integer notaCorrelativa = alumno.getAprobadasByID(idcorrelativa).getNotaFinal();
+		
+		
+		if(nota>0 && nota<=10 && notaCorrelativa>=7.0 && (materiacursando.getParcial1() >= 7) && (materiacursando.getParcial2() >=7) ) {
+			materiacursando.registrarNota(nota);
+			return true;
+			
+		}
+		else return false;	
+	}
+	
+	
+	public boolean soloPuedeRecuperar1(Comision comision,Integer idalumno) {
+		Alumno alumno = comision.getAlumnoByID(idalumno);
+		Integer idmateriacursando = comision.getMateria().getId();
+		Materia materiacursando = alumno.getCursandoByID(idmateriacursando);
+		if((materiacursando.isRec1erparcial() == false) && (materiacursando.isRec2doparcial() == false)) {
+			return true;
+		}else return false;
+	}
+	
+	
+	public Materia getMateriaByID(Integer idmateria) {
+		Materia found =null;
+		for(Comision comision : listaComisiones) {
+			if(comision.getMateria().getId().equals(idmateria)) {
+				found = comision.getMateria();
+			}
+		}return found;
+	}
+	
+	public boolean checkCorrelativasAprobadas(Integer idcorrelativa) {
+		if(getMateriaByID(idcorrelativa).getNotaFinal()>=7.0) {
+			return true;
+		}else return false;
+	}
+	
 	public void setNombreInstitucion(String nombreInstitucion) {
 		this.nombreInstitucion = nombreInstitucion;
 	}
@@ -67,6 +123,10 @@ public class Universidad {
 	}
 
 	// Metodos para ingreso/agregado de datos
+	
+	public void agregarAlumno(Alumno alumno) {
+		this.registroAlumnos.add(alumno);
+	}
 
 	public Boolean ingresarAlumno(Alumno alumno1, Integer dni) {
 
@@ -125,6 +185,16 @@ public class Universidad {
 
 		}
 		return false;
+	}
+	
+	private Alumno getAlumno(Integer id) {
+		Alumno found = null ;
+		for(Alumno alumno : registroAlumnos) {
+			if(alumno.getDni().equals(id)) {
+				found=alumno;
+			}
+		}
+		return found;
 	}
 
 	private boolean chequearMateriaExistente(Materia materia) {

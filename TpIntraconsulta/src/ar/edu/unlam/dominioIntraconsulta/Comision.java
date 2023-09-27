@@ -37,6 +37,15 @@ public class Comision {
 	public ArrayList<Alumno> getListaAlumnosComision() {
 		return listaAlumnosComision;
 	}
+	
+	public Alumno getAlumnoByID(Integer idalumno) {
+		Alumno found = null;
+		for(Alumno alumno : listaAlumnosComision) {
+			if(alumno.getDni().equals(idalumno)) {
+				found = alumno;
+			}
+		}return found;
+	}
 
 	public void setListaAlumnosComision(ArrayList<Alumno> listaAlumnosComision) {
 		this.listaAlumnosComision = listaAlumnosComision;

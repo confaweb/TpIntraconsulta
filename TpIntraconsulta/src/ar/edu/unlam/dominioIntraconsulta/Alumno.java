@@ -1,6 +1,7 @@
 package ar.edu.unlam.dominioIntraconsulta;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Alumno {
@@ -10,6 +11,9 @@ public class Alumno {
 	private Integer dni;
 	private LocalDate fechaNacimiento;
 	private LocalDate fechaIingreso;
+	private ArrayList<Materia> aprobadas = new ArrayList<Materia>();
+	private ArrayList<Materia> cursando = new ArrayList<Materia>();
+	
 
 	public Alumno(String nombre, String apellido, Integer dni, LocalDate fechaNacimiento, LocalDate fechaIngreso) {
 		this.nombre=nombre;
@@ -17,6 +21,31 @@ public class Alumno {
 		this.dni=dni;
 		this.fechaNacimiento=fechaNacimiento;
 		this.fechaIingreso=fechaIngreso;
+	}
+	
+	public void agregarCursando(Materia materia) {
+		this.cursando.add(materia);
+	}
+	public ArrayList<Materia> getCursando(){
+		return this.cursando;
+	}
+	
+	public Materia getAprobadasByID(Integer idaprobada) {
+		Materia found=null;
+		for(Materia aprobadas : this.aprobadas) {
+			if(aprobadas.getId().equals(idaprobada)) {
+				found = aprobadas;
+			}
+		}return found;
+	}
+	
+	public Materia getCursandoByID(Integer idmateriacursando) {
+		Materia found=null;
+		for(Materia materia : cursando) {
+			if(materia.getId().equals(idmateriacursando)) {
+				found = materia;
+			}
+		}return found;
 	}
 
 	public String getApellido() {
@@ -52,8 +81,15 @@ public class Alumno {
 	}
 	public Integer calcularEdad() {
 		Integer edad= LocalDate.now().getYear()-this.fechaNacimiento.getYear();
-		return edad;
-		
+		return edad;	
+	}
+	
+	public void agregarAprobadas(Materia materia) {
+		this.aprobadas.add(materia);
+	}
+	
+	public ArrayList<Materia> getAprobadas() {
+		return this.aprobadas;
 	}
 
 	@Override

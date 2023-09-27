@@ -354,4 +354,104 @@ public class TddIntraconsulta {
 
 		assertTrue(ve);
 	}
+
+	@Test
+	public void ObtenerMateriasAprobadasDeUnAlumno() {
+		Universidad uba = new Universidad("UBA");
+		String nombre = "jose";
+		String apellido = "Perez";
+		Integer dni = 1111;
+		Integer anio = 1995;
+		Month mes = Month.APRIL;
+		Integer dia = 29;
+		LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
+		LocalDate fechaIngreso = LocalDate.of(2020, Month.MARCH, 01);
+		
+		Alumno jose = new Alumno(nombre, apellido, dni, fechaNacimiento, fechaIngreso);
+		Materia fisica = new Materia("Fisica 2",152,140);
+		Materia quimica = new Materia("quimica 1",153,141);
+		
+		jose.agregarAprobadas(quimica);
+		jose.agregarAprobadas(fisica);
+		
+		ArrayList<Materia> aprobadas = new ArrayList<Materia>();
+		aprobadas.add(quimica);
+		aprobadas.add(fisica);
+		
+		assertTrue(aprobadas.equals(jose.getAprobadas()));
+		
+	}
+
+	@Test 
+	public void ObtenerNotaConIdAlumnoYIDMateria() {
+		Universidad uba = new Universidad("UBA");
+		String nombre = "jose";
+		String apellido = "Perez";
+		Integer dni = 1111;
+		Integer anio = 1995;
+		Month mes = Month.APRIL;
+		Integer dia = 29;
+		LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
+		LocalDate fechaIngreso = LocalDate.of(2020, Month.MARCH, 01);
+		
+		Alumno jose = new Alumno(nombre, apellido, dni, fechaNacimiento, fechaIngreso);
+		
+		uba.agregarAlumno(jose);
+		
+		
+	}
+
+	@Test
+	public void QueSoloPuedaCargarLaNotaFinalCumpliendoRequisitos() {
+		//universidad
+		Universidad uba = new Universidad("UBA");
+		LocalDate fechaInicio = LocalDate.of(2022, 03, 01);
+		LocalDate fechaFin = LocalDate.of(2022, 07, 01);
+		Integer id = 11111;
+		
+		String nombre = "Desarrollo 1";
+		Integer idMateria = 0001;
+		
+		String nombre2 = "Desarrollo 2";
+		Integer idMateria2 = 0002;
+		
+		
+		Integer dni = 12345;
+		String nombreDocente = "Juan";
+		
+		Turno turno = Turno.TARDE;
+		CicloLectivo cicloLectivo = new CicloLectivo(id, fechaInicio, fechaFin);
+		Docente docente = new Docente(dni, nombreDocente);
+		Materia materia = new Materia(nombre, idMateria);
+		Materia materia2 = new Materia(nombre2, idMateria2);
+		materia2.registrarNota(7);
+		
+		String alumno = "jose";
+		String apellido = "Perez";
+		Integer dnialum = 1111;
+		Integer anio = 1995;
+		Month mes = Month.APRIL;
+		Integer dia = 29;
+		LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
+		LocalDate fechaIngreso = LocalDate.of(2020, Month.MARCH, 01);
+		
+		Alumno jose = new Alumno(alumno, apellido, dnialum, fechaNacimiento, fechaIngreso);
+		
+
+		ArrayList<Alumno> listadoAlumnosDeLaComision = new ArrayList<Alumno>();
+		Comision comision = new Comision(cicloLectivo, docente, turno, materia, listadoAlumnosDeLaComision);
+		listadoAlumnosDeLaComision.add(jose);
+		
+		//ciclo
+		//docente
+		//materia
+		//listaalumnos
+		//comision
+	
+		Integer nota =7;
+		uba.registrarNota(comision, dni, nota);
+		
+		
+		
+	}
 }
