@@ -33,7 +33,7 @@ agregarAlumno*@* )
 agregarCicloLectivo *@* ))
 //No se puede asignar 2 ciclos Lectivo con mismo Id ---> y no se pueden superponer los rangos de fechas entre 2 ciclos distintos-->
 
-***********************************************************************************************************************************************************************
+
  
 agregarComision
 //No se Pueden generar 2 Comisiones para la misma materia, el mismo cicloLectivo y el mismo turno
